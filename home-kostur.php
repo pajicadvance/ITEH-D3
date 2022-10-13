@@ -184,9 +184,6 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Zatvori</button>
             </div>
         </div>
-
-
-
 </div>
 
 </div>
