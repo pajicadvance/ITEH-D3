@@ -1,18 +1,34 @@
+<?php
+require "model/prijave.php";
+require "dbBroker.php";
+
+session_start();
+
+if(!isset($_SESSION['user_id'])) header("Location: index.php");
+$rezultat = Prijava::getAll($conn);
+if(!$rezultat) {
+    echo "Greska prilikom izvodjenja upita<br>";
+    die();
+}
+if($rezultat->num_rows == 0) {
+    echo "Nema prijava na kolokvijume";
+    die();
+}
+
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
     <meta charset="UTF-8">
     <link rel="shortcut icon" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="css/home.css">
     <title>FON: Prijava kolokvijuma</title>
-
 </head>
 
 <body>
-
 
 <div class="jumbotron" style="color: black;"><h1>Fakultet organizacionih nauka</h1></div> 
 
@@ -24,7 +40,6 @@
     <div class="col-md-4">
         <button id="btn-dodaj" type="button" class="btn btn-success btn-block"
                 style="background-color: teal; border: 1px solid white;" data-toggle="modal" data-target="#myModal"> Zakazi kolokvijum</button>
-
     </div>
     <div class="col-md-4">
         <button id="btn-pretraga" class="btn btn-warning btn-block"
@@ -47,7 +62,7 @@
             </thead>
             <tbody>
             <?php
-            while ($red = $result->fetch_array()) {
+            while ($red = $rezultat->fetch_array()) {
                 ?>
                 <tr>
                     <td><?php echo $red["predmet"] ?></td>
@@ -64,7 +79,7 @@
                 </tr>
                 <?php
             }
-            } ?>
+        ?>
             </tbody>
         </table>
         <div class="row" >
@@ -77,7 +92,7 @@
                 <button id="btn-obrisi" class="btn btn-danger" style="background-color: red; border: 1px solid white;">Obrisi</button>
             </div>
 
-            <div class="col-md-2" style="text-align: right>; color:" >
+            <div class="col-md-2" style="text-align: right;">
                     <button id="btn-sortiraj" class="btn btn-normal" onclick="sortTable()">Sortiraj</button>
                 </div>
 
