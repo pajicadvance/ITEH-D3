@@ -14,7 +14,7 @@ if($rezultat->num_rows == 0) {
     echo "Nema prijava na kolokvijume";
     die();
 }
-
+/*izmeni $result dole u $rezultat*/
 
 ?>
 
